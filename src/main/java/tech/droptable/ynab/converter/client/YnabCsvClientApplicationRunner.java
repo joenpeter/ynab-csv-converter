@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
 import tech.droptable.ynab.converter.impl.CsvImport;
 import tech.droptable.ynab.converter.impl.CsvImportUtilities;
 
@@ -24,6 +25,7 @@ import tech.droptable.ynab.converter.impl.CsvImportUtilities;
  * @author Joen Peter
  *
  */
+@Component
 public class YnabCsvClientApplicationRunner implements ApplicationRunner {
   private static final Logger logger = LoggerFactory.getLogger(YnabCsvClientApplicationRunner.class);
   
