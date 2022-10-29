@@ -33,17 +33,29 @@ public class YnabCsvClientApplicationRunner implements ApplicationRunner {
   @Value("${ynab.input}")
   private String importPath;
   
+  @Value("${ynab.deleteWhenDone}")
+  private boolean deleteWhenDone;
+  
+  @Value("${ynab.noOutput}")
+  private boolean noOutput;
+  
   @Override
   public void run(ApplicationArguments args) throws Exception {
     logger.info("Import from: " + importPath);
     logger.info("Export to: " + exportPath);
+    logger.info("Delete when done: " + deleteWhenDone);
     List<String> files = getFilesFromFolder();
-    if(files.isEmpty()) {
+    if (files.isEmpty()) {
       logger.info("No files to import. Aborting.");
     }
     List<CsvImport> imports = createImportsFromFiles(files);
-    exportFiles(imports);
-    deleteFiles(files);
+    
+    if(!noOutput) {
+      exportFiles(imports);
+    }
+    if (deleteWhenDone) {
+      deleteFiles(files);
+    }
   }
 
   /**
