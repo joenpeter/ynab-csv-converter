@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tech.droptable.ynab.data;
+package tech.droptable.ynab.converter.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;

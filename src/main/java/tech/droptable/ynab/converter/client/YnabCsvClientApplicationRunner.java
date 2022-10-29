@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import tech.droptable.ynab.data.CsvImport;
-import tech.droptable.ynab.data.CsvImportUtilities;
+import tech.droptable.ynab.converter.impl.CsvImport;
+import tech.droptable.ynab.converter.impl.CsvImportUtilities;
 
 /**
  * @author Joen Peter

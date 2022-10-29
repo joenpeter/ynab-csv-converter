@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tech.droptable.ynab.data;
+package tech.droptable.ynab.converter.impl;
 
 import java.util.ArrayList;
 import java.util.List;
