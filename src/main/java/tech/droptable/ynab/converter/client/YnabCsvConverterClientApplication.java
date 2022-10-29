@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class YnabCsvConverterClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(YnabCsvConverterClientApplication.class, args);
+		SpringApplication.run(YnabCsvClientApplicationRunner.class, args);
 	}
 
 }

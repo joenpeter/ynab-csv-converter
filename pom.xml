@@ -14,7 +14,7 @@
 	<name>ynab-csv-converter-client</name>
 	<description>Client for converting csvs to ynab format</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
