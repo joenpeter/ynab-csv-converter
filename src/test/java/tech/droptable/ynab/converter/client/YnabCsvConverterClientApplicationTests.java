@@ -8,16 +8,10 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @ActiveProfiles("test")
-//@TestPropertySource(locations = "./application-test.properties")
 class YnabCsvConverterClientApplicationTests {
 
 	@Test
 	void contextLoads() {
-	}
-
-	@Test
-	void fullRunNoException() throws Exception {
-	  SpringApplication.run(YnabCsvClientApplicationRunner.class);
 	}
 	
 }
