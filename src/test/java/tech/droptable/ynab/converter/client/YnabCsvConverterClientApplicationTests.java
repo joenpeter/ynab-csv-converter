@@ -11,7 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 class YnabCsvConverterClientApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void testRun() {
 	}
 	
 }

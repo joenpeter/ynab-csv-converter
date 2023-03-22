@@ -14,6 +14,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
 import java.util.Arrays;
 import java.util.Locale;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class Transaction {
 
   private static final String DATE_PATTERN = "yyyy-MM-dd";
   private static final String DATE_INPUT_PATTERN = "[MM/dd/yyyy][yyyy/MM/dd][dd-MMM][MM-dd][yyyy-MM-dd]";
+  private static final int HARDCODED_DEFAULT_YEAR = 2023;
   private DateTimeFormatter formatter;
   private DateTimeFormatter inputFormatter;
   private Logger logger;
@@ -54,7 +56,13 @@ public class Transaction {
    * @throws IOException 
    * @throws ParseException 
    */
-  public Transaction(String line, String ordering) throws IOException, ParseException {
+  public Transaction(String line, String ordering) throws IOException, ParseException, UnsupportedOperationException {
+    if(line.startsWith("Valutakurs:")) {
+      // Special case for int transaction for MC
+      // This actually belongs to previous transaction, but is not needed
+      throw new UnsupportedOperationException("Cannot handle add-on lines for transaction");
+    }
+    
     formatter = getDateFormatter();
     inputFormatter = createInputDateFormatter();
     logger = LoggerFactory.getLogger(Transaction.class);
@@ -72,8 +80,8 @@ public class Transaction {
   
   private DateTimeFormatter createInputDateFormatter() {
     return new DateTimeFormatterBuilder()
+        //.parseDefaulting(ChronoField.YEAR, getDefaultYear())
         .appendPattern(DATE_INPUT_PATTERN)
-        .parseDefaulting(ChronoField.YEAR, getDefaultYear())
         .toFormatter(Locale.ENGLISH);
   }
 
@@ -82,7 +90,7 @@ public class Transaction {
    * @return
    */
   private int getDefaultYear() {
-    return 2022;
+    return HARDCODED_DEFAULT_YEAR;
   }
 
   private DateTimeFormatter getDateFormatter() {
@@ -168,7 +176,15 @@ public class Transaction {
   }
 
   private Instant parseDate(String string) {
-    return LocalDate.parse(string, inputFormatter).atStartOfDay(ZoneOffset.UTC).toInstant();
+    TemporalAccessor accessor = inputFormatter.parse(string);
+    LocalDate date;
+    if(accessor.isSupported(ChronoField.YEAR)) {
+      date = LocalDate.from(accessor);
+    } else {
+      date = LocalDate.of(HARDCODED_DEFAULT_YEAR, accessor.get(ChronoField.MONTH_OF_YEAR), accessor.get(ChronoField.DAY_OF_MONTH));
+    }
+    
+    return date.atStartOfDay(ZoneOffset.UTC).toInstant();
   }
 
   @Override

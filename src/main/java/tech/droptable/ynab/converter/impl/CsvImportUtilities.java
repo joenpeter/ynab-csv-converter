@@ -26,7 +26,11 @@ public class CsvImportUtilities {
     String lines[] = data.split("\\r?\\n");
     String head = lines[0];
     for(int i = 1; i < lines.length; i++) {
-      csv.addTransaction(new Transaction(lines[i], head));
+      try {
+        csv.addTransaction(new Transaction(lines[i], head));
+      } catch (UnsupportedOperationException e) {
+        // do nothing
+      }
     }
     return csv;
   }
