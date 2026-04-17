@@ -29,7 +29,9 @@ public class Transaction {
 
   private static final String DATE_PATTERN = "yyyy-MM-dd";
   private static final String DATE_INPUT_PATTERN = "[MM/dd/yyyy][yyyy/MM/dd][dd-MMM][MM-dd][yyyy-MM-dd]";
-  private static final int HARDCODED_DEFAULT_YEAR = 2023;
+  private static final int HARDCODED_DEFAULT_YEAR = 2026;
+  private static final char SCI_MINUS = '\u2212';
+  private static final char EXPECTED_MINUS = '-';
   private DateTimeFormatter formatter;
   private DateTimeFormatter inputFormatter;
   private Logger logger;
@@ -165,10 +167,11 @@ public class Transaction {
     try {
       return BigDecimal.valueOf(Double.parseDouble(string));
     } catch (NumberFormatException e) {
-      logger.debug("Regular double parser does not work - falling back to Number");
+      logger.info("Regular double parser does not work - falling back to Number");
     }
     string = string.replaceAll("\"", "");
     string = string.replaceAll("\\s+","");
+    string = string.replace(SCI_MINUS, EXPECTED_MINUS);
     
     NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
     Number number = format.parse(string);

@@ -43,6 +43,7 @@ public class YnabCsvClientApplicationRunner implements ApplicationRunner {
   
   @Override
   public void run(ApplicationArguments args) throws Exception {
+    
     logger.info("Import from: " + importPath);
     logger.info("Export to: " + exportPath);
     logger.info("Delete when done: " + deleteWhenDone);
